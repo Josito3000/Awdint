@@ -1,8 +1,14 @@
+#Python built-in libraries
+import time
+import random
+
+#First party libraries
+from utils.helpers import *
+
+#Third party libreries
 import requests
 from bs4 import BeautifulSoup
-import time
 from fake_useragent import UserAgent
-import random
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
@@ -62,15 +68,15 @@ for page in range(1, num_pages + 1):
         car_soup = BeautifulSoup(car_response.text, "html.parser")
 
         # Extract car title
-        title_elem = car_soup.find("h1")#, class_= "mt-TitleBasic-title mt-TitleBasic-title--s mt-TitleBasic-title--black")
-        title = title_elem.text.strip() if title_elem else "N/A"
+        title_elem = car_soup.find("h1", class_= "mt-TitleBasic-title mt-TitleBasic-title--s mt-TitleBasic-title--black")
+        title = transformation(title_elem)
         #with open('data.html', 'w', encoding='utf-8') as file:
         #    file.write(car_soup.prettify())
         print(f"🚗 Car Title: {title}")
 
         # Extract car price
         price_elem = car_soup.find("h3", class_="mt-TitleBasic-title mt-TitleBasic-title--s mt-TitleBasic-title--currentColor")
-        price = price_elem.text.strip() if price_elem else "N/A"
+        price = transformation(price_elem)
         print(f"💰 Price: {price}")
 
         # Extract car features
@@ -81,6 +87,14 @@ for page in range(1, num_pages + 1):
             print(f"📌 Features: {', '.join(features)}")
         else:
             print("⚠ No features found.")
+
+        desc_elem = car_soup.find("div", class_="mt-PanelAdDetails-commentsContent" , attrs = {"data-testid": "mt-PanelAdDetails-description"})
+        desc = transformation(desc_elem)
+        print(f"📝 Descripción: {desc}")
+
+        rate_elem = car_soup.find("p", class_="mt-RatingBasic-infoValue")
+        rate = transformation(rate_elem)
+        print(f"🌟 Rating: {rate}")
 
         print("\n" + "-" * 50 + "\n")
 
