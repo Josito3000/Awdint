@@ -21,15 +21,15 @@ headers = {
 # Use a session for persistent connections and automatic cookie handling
 session = requests.Session()
 
-for i in range(1):
+for i in range(10):
     URL = 'https://www.coches.net/segunda-mano/'
     r = session.get(URL, headers=headers)
-    print(r.content)
+    #print(r.content)
 
     time.sleep(random.uniform(3 + i, 7 + i))
 
     soup = BeautifulSoup(r.content, 'html.parser')
-    print(soup)
+    #print(soup)
 
     # Extract car links
     links = soup.find_all('a', class_="mt-CardAd-media")
@@ -37,6 +37,8 @@ for i in range(1):
     # Extract the href attribute for each link in the result set
     links_href = [link.get('href') for link in links]
 
+    print(links_href)
+    
     # Print the link of each car
     for link_href in links_href:
         print("ENLACE: ", link_href)

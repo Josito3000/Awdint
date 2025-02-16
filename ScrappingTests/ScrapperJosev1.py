@@ -3,8 +3,8 @@ from bs4 import BeautifulSoup
 import time
 from fake_useragent import UserAgent
 import random
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
+#from selenium import webdriver
+#from selenium.webdriver.common.keys import Keys
 
 # Initialize User-Agent rotation
 ua = UserAgent()

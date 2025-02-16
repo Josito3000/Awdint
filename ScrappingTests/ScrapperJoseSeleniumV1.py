@@ -17,7 +17,7 @@ driver = uc.Chrome(options=options)
 
 # Target URL
 base_url = "https://www.coches.net/segunda-mano/"
-num_pages = 1
+num_pages = 3
 
 for page in range(1, num_pages + 1):
     url = f"{base_url}?pg={page}"
@@ -48,6 +48,7 @@ for page in range(1, num_pages + 1):
     links_href = [f"https://www.coches.net{link.get('href')}" for link in links if link.get("href")]
 
     print(f"🔗 Extracted {len(links_href)} car links")
+    print(links)
 
 driver.quit()  # Close browser session
 print("✅ Scraping complete.")
