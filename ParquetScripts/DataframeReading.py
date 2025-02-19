@@ -28,3 +28,10 @@ print(df["KM"].describe())
 #df = pd.concat([df, features_df], axis=1)
 
 #print(df.dtypes)
+
+df_grouped = df.groupby("URL")["PriceInt"].unique().reset_index()
+df_grouped = df_grouped[df_grouped["PriceInt"].apply(len) > 1]  # Keep only those with multiple prices
+
+print(df_grouped["URL"])
+
+#df[df["URL"].str.contains("https://www.coches.net/mini-mini-cooper-se-3p-electrico-/-hibrido-2022-en-madrid-58969816-covo.aspx")]

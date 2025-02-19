@@ -18,7 +18,7 @@ driver = uc.Chrome(options=options)
 
 # Target URL
 base_url = "https://www.coches.net/segunda-mano/"
-num_pages = 500
+num_pages = 8500
 
 # Load first page
 driver.get(base_url)
@@ -30,7 +30,7 @@ timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M")
 # Open (or create if it doesn't exist) a file in append mode:
 with open(f"car_links_{timestamp}.txt", "a", encoding="utf-8") as outfile:
 
-    for page in range(301, num_pages + 1):
+    for page in range(8000, num_pages + 1):
 
         url = f"{base_url}?pg={page}"
         print(f"📄 Loading page {page}: {url}")
@@ -72,3 +72,4 @@ with open(f"car_links_{timestamp}.txt", "a", encoding="utf-8") as outfile:
             time.sleep(random.uniform(2, 3))
 driver.quit()  # Close browser session
 print("✅ Scraping complete. Links saved to car_links.txt.")
+
