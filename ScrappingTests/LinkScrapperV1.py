@@ -6,6 +6,7 @@ import pyarrow.parquet as pq
 import pyarrow as pa
 from fake_useragent import UserAgent
 import random
+from datetime import datetime
 
 # Initialize User-Agent rotation
 ua = UserAgent()
@@ -14,12 +15,16 @@ ua = UserAgent()
 session = requests.Session()
 
 # Read URLs from file
-file_path = "car_links_100pages.txt"  # Change if needed
+file_path = "car_links_2025-02-17_21-07.txt"  # Change if needed
 with open(file_path, "r", encoding="utf-8") as file:
     car_urls = [line.strip() for line in file.readlines()]
 
+car_urls = car_urls[:100]
+
 # List to store scraped data
 car_data = []
+
+start = (time.time())
 
 # Loop through each car URL
 for index, car_url in enumerate(car_urls, start=1):
@@ -41,7 +46,7 @@ for index, car_url in enumerate(car_urls, start=1):
         # Check if blocked
         if "Ups! Parece que algo no va bien..." in car_response.text:
             print("🚨 Blocked! Retrying with new headers...\n")
-            time.sleep(random.uniform(5, 10))
+            #time.sleep(random.uniform(5, 10))
             continue
 
         car_soup = BeautifulSoup(car_response.text, "html.parser")
@@ -75,14 +80,17 @@ for index, car_url in enumerate(car_urls, start=1):
         print(f"⚠ Error scraping {car_url}: {e}")
 
     # Random delay before the next request
-    time.sleep(random.uniform(5, 12))
+    #time.sleep(random.uniform(5, 12))
 
+print(time.time()-start)
 print("✅ Scraping complete.")
 
 # Convert data to a DataFrame
 df = pd.DataFrame(car_data)
 
 # Save as Parquet
-parquet_filename = "coches_data_15_02_2025.parquet"
-df.to_parquet(parquet_filename, engine="pyarrow", index=False)
-print(f"✅ Data saved to '{parquet_filename}'")
+timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M")
+
+#parquet_filename = "coches_data_{timestamp}.parquet"
+#df.to_parquet(parquet_filename, engine="pyarrow", index=False)
+#print(f"✅ Data saved to '{parquet_filename}'")

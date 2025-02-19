@@ -4,6 +4,7 @@ import undetected_chromedriver as uc
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from bs4 import BeautifulSoup
+from datetime import datetime
 
 # Launch undetected Chrome
 options = uc.ChromeOptions()
@@ -17,20 +18,30 @@ driver = uc.Chrome(options=options)
 
 # Target URL
 base_url = "https://www.coches.net/segunda-mano/"
-num_pages = 100
+num_pages = 500
 
+# Load first page
+driver.get(base_url)
+time.sleep(5)  # Wait for cookies pop-up to appear
+
+restart_every = 25
+
+timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M")
 # Open (or create if it doesn't exist) a file in append mode:
-with open("car_links_100pages.txt", "a", encoding="utf-8") as outfile:
+with open(f"car_links_{timestamp}.txt", "a", encoding="utf-8") as outfile:
 
     for page in range(1, num_pages + 1):
+
         url = f"{base_url}?pg={page}"
         print(f"📄 Loading page {page}: {url}")
 
         driver.get(url)
-        time.sleep(random.uniform(1, 2))  # Human-like wait time
+        time.sleep(random.uniform(0.25, 2))  # Human-like wait time
+
+        driver.execute_script("document.body.style.zoom='5%'")
 
         # Simulate human scrolling and waiting for JavaScript to load
-        for _ in range(random.randint(35, 40)):
+        for _ in range(random.randint(3, 6)):
             driver.find_element(By.TAG_NAME, "body").send_keys(Keys.PAGE_DOWN)
             time.sleep(random.uniform(0.1, 1))  # Vary the delay for realism
 
@@ -41,7 +52,7 @@ with open("car_links_100pages.txt", "a", encoding="utf-8") as outfile:
         #with open(f"coches_net_rendered_{page}.html", "w", encoding="utf-8") as file:
         #    file.write(html_content)
 
-        print(f"✅ Page {page} saved to coches_net_rendered_{page}.html")
+        #print(f"✅ Page {page} saved to coches_net_rendered_{page}.html")
 
         # Parse with BeautifulSoup
         soup = BeautifulSoup(html_content, "html.parser")
@@ -57,5 +68,7 @@ with open("car_links_100pages.txt", "a", encoding="utf-8") as outfile:
         for link in links_href:
             outfile.write(link + "\n")
 
+        if page % restart_every == 0:
+            time.sleep(random.uniform(5, 8))
 driver.quit()  # Close browser session
 print("✅ Scraping complete. Links saved to car_links.txt.")
