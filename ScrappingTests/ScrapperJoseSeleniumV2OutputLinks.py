@@ -30,20 +30,20 @@ timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M")
 # Open (or create if it doesn't exist) a file in append mode:
 with open(f"car_links_{timestamp}.txt", "a", encoding="utf-8") as outfile:
 
-    for page in range(1, num_pages + 1):
+    for page in range(301, num_pages + 1):
 
         url = f"{base_url}?pg={page}"
         print(f"📄 Loading page {page}: {url}")
 
         driver.get(url)
-        time.sleep(random.uniform(0.25, 2))  # Human-like wait time
+        time.sleep(random.uniform(0.25, 1))  # Human-like wait time
 
-        driver.execute_script("document.body.style.zoom='5%'")
+        driver.execute_script("document.body.style.zoom='3%'")
 
         # Simulate human scrolling and waiting for JavaScript to load
-        for _ in range(random.randint(3, 6)):
+        for _ in range(random.randint(4, 6)):
             driver.find_element(By.TAG_NAME, "body").send_keys(Keys.PAGE_DOWN)
-            time.sleep(random.uniform(0.1, 1))  # Vary the delay for realism
+            time.sleep(random.uniform(0.1, 0.15))  # Vary the delay for realism
 
         # Get fully loaded HTML
         html_content = driver.page_source
@@ -69,6 +69,6 @@ with open(f"car_links_{timestamp}.txt", "a", encoding="utf-8") as outfile:
             outfile.write(link + "\n")
 
         if page % restart_every == 0:
-            time.sleep(random.uniform(5, 8))
+            time.sleep(random.uniform(2, 3))
 driver.quit()  # Close browser session
 print("✅ Scraping complete. Links saved to car_links.txt.")

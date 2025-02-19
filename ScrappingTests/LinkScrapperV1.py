@@ -15,11 +15,11 @@ ua = UserAgent()
 session = requests.Session()
 
 # Read URLs from file
-file_path = "car_links_2025-02-17_21-07.txt"  # Change if needed
+file_path = "car_links_2025-02-19_15-08.txt"  # Change if needed
 with open(file_path, "r", encoding="utf-8") as file:
     car_urls = [line.strip() for line in file.readlines()]
 
-car_urls = car_urls[:100]
+#car_urls = car_urls[:100]
 
 # List to store scraped data
 car_data = []
