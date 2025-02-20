@@ -127,3 +127,4 @@ def scrape_folder(folder_path, output_filename=None, limit_per_file=None, output
     return df  # Return DataFrame for further processing if needed
 
 scrape_folder("C:\\Users\\PORTATIL\\OneDrive\\Documentos\\Projects\\CochecitosScrapping\\CarLinks")
+

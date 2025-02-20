@@ -1,7 +1,8 @@
 import pandas as pd
 import numpy as np
 
-df = pd.read_parquet("C:/Users/PORTATIL/OneDrive/Documentos/Projects/CochecitosScrapping/OutputData/coches_data_consolidado_2025-02-19_17-27.parquet")
+df = pd.read_parquet("C:/Users/PORTATIL/OneDrive/Documentos/Projects/CochecitosScrapping/OutputData/coches_data_consolidado_2025-02-20_17-18.parquet")
+
 print(df.head())
 print(df.columns)
 
