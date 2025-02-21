@@ -27,6 +27,7 @@ def ScrapeMainPageListings_Selenium_ListFileOutput(
 ):
     # Launch undetected Chrome
     options = uc.ChromeOptions()
+    #options.add_argument("--headless=new")  # Runs Chrome in headless mode but doesn't load the content so avoid
     options.add_argument("--disable-blink-features=AutomationControlled")  # Prevent bot detection
     options.add_argument("start-maximized")  # Open full screen like a real user
     options.add_argument("--disable-extensions")  # Mimic a clean browser
@@ -37,7 +38,7 @@ def ScrapeMainPageListings_Selenium_ListFileOutput(
 
     # Load first page
     driver.get(base_url)
-    time.sleep(5)  # Wait for cookies pop-up to appear
+    time.sleep(15)  # Wait for cookies pop-up to appear
 
 
     num_pages = 8500
@@ -57,14 +58,16 @@ def ScrapeMainPageListings_Selenium_ListFileOutput(
             print(f"📄 Loading page {page}: {url}")
 
             driver.get(url)
-            time.sleep(random.uniform(0.25, 1))  # Human-like wait time
+            time.sleep(random.uniform(0.5, 1))  # Human-like wait time
 
-            driver.execute_script("document.body.style.zoom='3%'")
+            driver.execute_script("document.body.style.zoom='2%'")
 
             # Simulate human scrolling and waiting for JavaScript to load
-            for _ in range(random.randint(4, 6)):
-                driver.find_element(By.TAG_NAME, "body").send_keys(Keys.PAGE_DOWN)
-                time.sleep(random.uniform(0.1, 0.15))  # Vary the delay for realism
+            #for _ in range(random.randint(4, 7)):
+            #    driver.find_element(By.TAG_NAME, "body").send_keys(Keys.PAGE_DOWN)
+            #    time.sleep(random.uniform(0.05, 0.10))  # Vary the delay for realism
+
+            time.sleep(0.1)
 
             # Get fully loaded HTML
             html_content = driver.page_source
@@ -95,11 +98,14 @@ def ScrapeMainPageListings_Selenium_ListFileOutput(
     driver.quit()  # Close browser session
     print("✅ Scraping complete. Links saved to car_links.txt.")
 
+    return timestamp
+
 # Initialize User-Agent rotation
 ua = UserAgent()
 
 # Use a session for persistent connections & automatic cookie handling
 session = requests.Session()
+
 
 def ScrapeCarListing(
     car_url,

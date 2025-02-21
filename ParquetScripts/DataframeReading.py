@@ -79,10 +79,6 @@ plt.show()  # ✅ Ensures the first plot is displayed before moving to the next
 # Now, create the 3D regression plot
 # --------------------------------
 
-# Extract relevant data
-X = df[['KM', 'YEAR']].values
-y = df['PriceInt'].values
-
 # Create a grid for the regression plane
 km_range = np.linspace(df["KM"].min(), df["KM"].max(), 20)
 year_range = np.linspace(df["YEAR"].min(), df["YEAR"].max(), 20)
@@ -97,6 +93,8 @@ ax = fig.add_subplot(111, projection='3d')
 
 # Scatter plot of actual data points
 ax.scatter(df["KM"], df["YEAR"], df["PriceInt"], c='blue', marker='o', alpha=0.5, label="Actual Prices")
+ax.scatter(df["KM"], df["YEAR"], df["Predicted_Price"], c='black', marker='*', alpha=0.9, label="Predicted prices")
+
 
 # Plot the regression plane
 ax.plot_surface(KM_grid, Year_grid, Z, color='red', alpha=0.3, edgecolor='k')
