@@ -20,7 +20,7 @@ def greet():
 def ScrapeMainPageListings_Selenium_ListFileOutput(
     base_url = "https://www.coches.net/segunda-mano/",
     start_page = 1,
-    output_folder="C:/Users/PORTATIL/OneDrive/Documentos/Projects/CochecitosScrapping/CarLinks",
+    output_folder="C:/Users/PORTATIL/OneDrive/Documentos/Projects/CochecitosScrapping/CarLinks2",
 
 
         
@@ -72,15 +72,24 @@ def ScrapeMainPageListings_Selenium_ListFileOutput(
             # Get fully loaded HTML
             html_content = driver.page_source
 
+             # Check if blocked
+            if "Ups! Parece que algo no va bien..." in html_content:
+                print(f"🚨 Blocked on page {page}")
+                #time.sleep(random.uniform(5, 10))  # Wait before retrying
+                driver.quit()  # Close browser session
+                print("Waiting for the next opening")
+                return None  # Skip to the next page
+
             # (Optional) Save the HTML for debugging
             #with open(f"coches_net_rendered_{page}.html", "w", encoding="utf-8") as file:
             #    file.write(html_content)
 
             #print(f"✅ Page {page} saved to coches_net_rendered_{page}.html")
 
+
             # Parse with BeautifulSoup
             soup = BeautifulSoup(html_content, "html.parser")
-
+        
             # Extract car links
             links = soup.find_all("a", class_="mt-CardAd-media")
             links_href = [f"https://www.coches.net{link.get('href')}"
