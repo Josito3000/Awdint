@@ -21,3 +21,7 @@
 
 #### Capas Anticorrupción
 [El error #1 al usar APIs (y cómo evitarlo con capas anticorrupción)](https://www.youtube.com/watch?v=hfVIsucllWg)
+
+## Google WorkSpace
+
+Google WorkSpace dispone de varias herramientas Google, entre ellas [Google Sites](https://sites.google.com/). Te permite crear páginas webs a nivel básico, google te aporta el dominio. Probablemente haya mejores opciones de hosting.
