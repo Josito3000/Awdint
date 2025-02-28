@@ -18,7 +18,7 @@ def greet():
     print("greetings")
     
 def ScrapeMainPageListings_Selenium_ListFileOutput(
-    base_url = "https://www.coches.net/segunda-mano/",
+    base_url = "",
     start_page = 1,
     output_folder="C:/Users/PORTATIL/OneDrive/Documentos/Projects/CochecitosScrapping/CarLinks2",
 
