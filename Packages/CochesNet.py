@@ -41,7 +41,7 @@ def ScrapeMainPageListings_Selenium_ListFileOutput(
     time.sleep(15)  # Wait for cookies pop-up to appear
 
 
-    num_pages = 8500
+    num_pages = 8500 #refine to  scrape number of pages
 
     restart_every = 25
 
@@ -60,6 +60,7 @@ def ScrapeMainPageListings_Selenium_ListFileOutput(
             driver.get(url)
             time.sleep(random.uniform(0.5, 1))  # Human-like wait time
 
+            #Extreme zoom out to force all the page loading
             driver.execute_script("document.body.style.zoom='2%'")
 
             # Simulate human scrolling and waiting for JavaScript to load
@@ -75,9 +76,11 @@ def ScrapeMainPageListings_Selenium_ListFileOutput(
              # Check if blocked
             if "Ups! Parece que algo no va bien..." in html_content:
                 print(f"🚨 Blocked on page {page}")
-                #time.sleep(random.uniform(5, 10))  # Wait before retrying
+                #time.sleep(random.uniform(5, 10)) 
+
                 driver.quit()  # Close browser session
                 print("Waiting for the next opening")
+
                 return None  # Skip to the next page
 
             # (Optional) Save the HTML for debugging
@@ -101,13 +104,16 @@ def ScrapeMainPageListings_Selenium_ListFileOutput(
             for link in links_href:
                 outfile.write(link + "\n")
 
+            #Little human mimicking every once in a while
             if page % restart_every == 0:
                 time.sleep(random.uniform(2, 3))
 
     driver.quit()  # Close browser session
-    print("✅ Scraping complete. Links saved to car_links.txt.")
+    print(f"✅ Scraping complete. Links saved to {file_path}.")
 
     return timestamp
+
+
 
 # Initialize User-Agent rotation
 ua = UserAgent()
@@ -143,8 +149,13 @@ def ScrapeCarListing(
         # Extract car details
         title = soup.find("h1").text.strip() if soup.find("h1") else "N/A"
         price = soup.find("h3", class_="mt-TitleBasic-title mt-TitleBasic-title--s mt-TitleBasic-title--currentColor")
+        listing_info = soup.find("p", class_ ="mt-PanelAdInfo-published")
+
         price = price.text.strip() if price else "N/A"
-        print(f"💰 Price: {price}")
+        listing_info = listing_info.text.strip() if listing_info else "N/A"
+
+        print(listing_info)
+        #print(f"💰 Price: {price}")
         # Extract features
         features = []
         ul_element = soup.find("ul", class_="mt-PanelAdDetails-data")
@@ -157,6 +168,7 @@ def ScrapeCarListing(
             "Features": ", ".join(features),
             "URL": car_url,
             "Scrape Date": datetime.now().strftime("%Y-%m-%d"),
+            "ListingInfo": listing_info,
             "Source File": source_file  # Store source file for tracking
         }
 

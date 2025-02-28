@@ -4,7 +4,7 @@ import time
 def main():
     #time.sleep(600)
 
-    for i in range(20, 21):
+    for i in range(1, 10):
 
         CochesNet.ScrapeMainPageListings_Selenium_ListFileOutput(start_page=100*i)
 
