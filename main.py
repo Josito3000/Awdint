@@ -1,7 +1,9 @@
 #Python built-in libraries
 import time
 import random
-
+import os 
+s = os.getenv('URL')
+print(s)
 #First party libraries
 from utils.helpers import *
 
@@ -19,7 +21,7 @@ ua = UserAgent()
 session = requests.Session()
 
 # Target URL
-base_url = "https://www.coches.net/segunda-mano/"
+base_url = os.getenv(url)
 
 # Number of pages to scrape
 num_pages = 2
