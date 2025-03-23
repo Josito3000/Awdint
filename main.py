@@ -249,7 +249,7 @@ class CarScraper:
             "Location": None,
             "Seller_Type": None,
             "Engine_Type": None,
-            "Power": None,
+            #"Power": None,
             "Transmission": None,
             "Rate": None,
             "Scrape Date": datetime.now().strftime("%Y-%m-%d"),
